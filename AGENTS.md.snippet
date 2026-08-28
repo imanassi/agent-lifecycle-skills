@@ -1,0 +1,45 @@
+<!--
+Append this to the target project's AGENTS.md (install.sh does it for you).
+It is the fallback that makes /spec and /wrap work in agents with no custom-command
+support — Gemini CLI, Aider, Windsurf, Copilot, and whatever ships next month.
+Delete this comment block if you paste it by hand.
+-->
+
+## Specs and session wraps
+
+This convention is [slate](https://github.com/imanassi/slate).
+
+This repository keeps two kinds of agent-written documents.
+
+**Specs** live in `docs/specs/`. They fix the intent, shape, and acceptance criteria of a
+piece of work before it is built, and they are revised in place as understanding changes.
+When the user invokes `/spec` or `$spec`, or asks for a spec: read
+`.agents/skills/spec/SKILL.md` and follow it. That procedure ends by writing the spec and
+stopping — do not begin implementing unless the user explicitly says to.
+
+**Session wraps** live in `docs/sessions/`. They record what actually happened in one
+working session — intent, decisions, changes, verification — and are never edited after the
+fact. When the user invokes `/wrap` or `$wrap`, or asks to wrap up the session: read
+`.agents/skills/wrap/SKILL.md` and follow it.
+
+Do not write either document unless the user asks for one.
+
+### Verification commands
+
+Fill these in once per project. Specs reference them rather than repeating them, and an agent
+implementing a spec is expected to run them itself rather than reporting work as done
+unverified.
+
+- Build and test everything: `<e.g. ./mvnw verify>`
+- One module: `<e.g. ./mvnw -pl <module> -am verify>`
+- A single test: `<e.g. ./mvnw -pl <module> test -Dtest=<ClassName>#<method>>`
+- Static analysis / format check: `<e.g. ./mvnw spotless:check>`
+- Run the app locally: `<command, and any profile or env it needs>`
+
+Prefer the narrowest command that gives a real signal while iterating, and the full one before
+reporting done. "It should pass" is not a result — run it.
+
+When picking up unfamiliar work here: read the relevant spec in `docs/specs/` if there is
+one, and the two or three most recent files in `docs/sessions/`. They carry the intent and
+the decisions behind recent changes, which the commit history does not. If you find yourself
+departing from an approved spec, say so out loud rather than quietly reconciling the two.
