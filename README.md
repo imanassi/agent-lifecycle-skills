@@ -1,6 +1,6 @@
-# slate
+# agent-lifecycle-skills
 
-**Clean-slate specs and session debriefs for AI coding agents.**
+**Interactive specs and session debriefs for AI coding agents.**
 
 Bookend your agent sessions. `/spec` interviews you *before* the work and writes a task
 contract. `/wrap` debriefs the session *after* and records what was decided, changed, and
@@ -27,7 +27,7 @@ lost context at the end — you explain the constraint once, the agent drifts, a
 sessions later nobody remembers why the retry policy looks like that. The diff records what
 changed and nothing records why.
 
-slate is two lightweight, repository-native commands that close both ends:
+These are two lightweight, repository-native commands that close both ends:
 
 - **`/spec`** draws out what you actually want — edge cases, constraints, acceptance criteria,
   and the runnable checks that prove them — into a task contract the implementing session can
@@ -37,18 +37,11 @@ slate is two lightweight, repository-native commands that close both ends:
 
 Everything is plain Markdown committed to your repo. No service, no database, no lock-in.
 
-## The name
-
-A film slate is clapped at the head of a take to say what this one is, and *"that's a wrap"*
-is called at the end. Same two moments here. The pun is load-bearing in a third way: `/spec`
-deliberately **stops** rather than implementing, so the work starts on a clean slate — a fresh
-session that has read the finished spec and none of the discarded drafts that produced it.
-
 ## Install
 
 ```bash
-git clone git@github.com:imanassi/slate.git
-./slate/install.sh /path/to/my-project
+git clone git@github.com:imanassi/agent-lifecycle-skills.git
+./agent-lifecycle-skills/install.sh /path/to/my-project
 ```
 
 Never overwrites, so re-running after you have customised the formats is safe.
@@ -134,10 +127,11 @@ Questions that draw your framing out are the job; supplying it is not.
 
 **`/spec` stops.** It does not offer to continue, because an offer arriving at the moment of
 maximum momentum is answered yes every time — so "offer" is just "continue" with a fig leaf.
-It stops because the interview leaves the agent's own rejected proposals sitting in context,
-and a model drifts back toward its earlier reasoning more readily than toward a correction you
-made once in passing. The stop is made cheap: the command ends by printing the line to paste
-into a fresh session. Say "and start now" to override.
+It stops so implementation begins from a clean context: the interview leaves the agent's own
+rejected proposals sitting in the window, and a model drifts back toward its earlier reasoning
+more readily than toward a correction you made once in passing. A fresh session that has read
+the finished spec and none of the discarded drafts does better work. The stop is made cheap —
+the command ends by printing the line to paste. Say "and start now" to override.
 
 **`model:` defaults to `unknown`.** Agents frequently do not know which model is serving them;
 the serving model can differ from the configured one and change mid-session. Both formats tell

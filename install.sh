@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# slate — install /spec and /wrap into a project.
-# https://github.com/imanassi/slate
+# agent-lifecycle-skills — install /spec and /wrap into a project.
+# https://github.com/imanassi/agent-lifecycle-skills
 #
 #   ./install.sh /path/to/my-project
 #

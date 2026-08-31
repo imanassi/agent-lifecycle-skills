@@ -1,6 +1,6 @@
 # Examples
 
-Two slate documents from a fictional Java project (`com.acme.payments`).
+Two documents from a fictional Java project (`com.acme.payments`).
 
 Two files showing the pair in use: a spec, and the session wrap that implemented it.
 
