@@ -7,18 +7,43 @@ contract. `/wrap` debriefs the session *after* and records what was decided, cha
 verified. Both behave identically in Claude Code, Codex CLI, Cursor, and anything that reads
 `AGENTS.md`.
 
+```mermaid
+flowchart TD
+    subgraph S1["<b>SESSION 1</b> · decide"]
+        A["<b>You</b><br/>a rough, half-formed idea"]
+        B["<b>/spec</b><br/>tidies your brief<br/>reads the code<br/>interviews you"]
+        C["<b>docs/specs/&lt;feature&gt;.md</b><br/>what to build<br/>and how to check it"]
+        A --> B --> C
+    end
+
+    STOP{{"<b>HARD STOP</b><br/>you read the spec<br/>no code written yet"}}
+
+    subgraph S2["<b>SESSION 2</b> · build, on a clean context"]
+        D["<b>Agent implements</b><br/>from the spec only,<br/>not the interview<br/>runs the spec's checks<br/>until they pass"]
+        E["<b>/wrap</b><br/>reads the session<br/>and the diff"]
+        F["<b>docs/sessions/&lt;date&gt;.md</b><br/>what happened<br/>what was decided, and why"]
+        D --> E --> F
+    end
+
+    C --> STOP --> D
+    F -.->|"linked by <b>spec:</b>"| C
+
+    classDef doc  fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
+    classDef cmd  fill:#d1fae5,stroke:#047857,stroke-width:2px,color:#022c22
+    classDef stop fill:#fef3c7,stroke:#b45309,stroke-width:3px,color:#451a03
+    classDef you  fill:#ffffff,stroke:#64748b,stroke-width:2px,color:#0f172a
+    class C,F doc
+    class B,E cmd
+    class STOP stop
+    class A,D you
+    style S1 fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#475569
+    style S2 fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#475569
+    linkStyle default stroke:#64748b,stroke-width:1.5px
 ```
-  /spec ─────────────────► docs/specs/<slug>.md
-    │  interview                    │
-    │                               │
-    ▼  hard stop                    ▼  fresh session, clean context
-  you read it            agent implements, running "How to verify" as it goes
-                                    │
-                                    ▼
-                        /wrap ──► docs/sessions/YYYY-MM-DD-<slug>.md
-                                    spec: ──┐  links back
-                                            └─► docs/specs/<slug>.md
-```
+
+<sub>Two sessions, on purpose. `/spec` decides what to build and then stops; a **fresh**
+session builds it, reading the finished spec and none of the discarded drafts that produced
+it. `/wrap` closes the loop and links its record back to the spec.</sub>
 
 ## Why
 
