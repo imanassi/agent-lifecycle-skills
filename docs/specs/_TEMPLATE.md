@@ -13,8 +13,10 @@ superseded_by: null
 
 ## Brief
 
-> <The human's own framing, captured before the interview. Allowed to be half-formed. Frozen
-> once the interview starts: not tidied, not corrected, not revised when the spec is.
+> <The human's own framing, captured before the interview. Allowed to be half-formed.
+> Tidied for readability only — nothing added, no ambiguity resolved, hedges left intact —
+> and agreed with them before it lands. Frozen once the interview starts: not edited again,
+> not corrected, not revised when the spec is.
 > Add *(elicited in conversation)* if it was drawn out rather than written in one go.>
 
 ## Problem

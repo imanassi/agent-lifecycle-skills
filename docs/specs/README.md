@@ -95,13 +95,15 @@ The human's own framing of what they want, as a blockquote, captured before the 
 proper begins.
 
 **It is allowed to be half-formed, vague, or partly wrong.** That is what a starting point
-looks like. Do not hold the spec hostage to a good brief, and do not improve it on the
-human's behalf.
+looks like, and it is not the agent's job to fix it.
 
-Freeze it anyway. Once the interview starts, the brief is not edited again — not tidied, not
-corrected, not revised when the spec is. Its value is precisely that it is naive: six months
-on, `## Problem` is the polished consensus and `## Brief` is where the thinking started. When
-those two have drifted a long way apart, that gap is the most interesting thing in the file.
+It does get a **polish pass** before it lands: the agent tidies the raw text into something
+readable, shows it back, and waits for a yes. That pass is *presentational only* — see
+[The polish pass](#the-polish-pass). Once it is agreed, the brief is frozen: not edited again,
+not corrected, not revised when the spec is. Its value is precisely that it is naive — six
+months on, `## Problem` is the settled consensus and `## Brief` is where the thinking started.
+When those two have drifted a long way apart, that gap is the most interesting thing in the
+file.
 
 ```markdown
 > We keep losing captures whenever Adyen wobbles. Friday cost us ~340 payments and a pile
@@ -113,9 +115,8 @@ Two or three sentences is plenty. If it was thin, leave it thin — do not pad i
 considered. Where the spec later contradicts the brief, say so in `## Approach` rather than
 quietly editing the brief to agree.
 
-If the brief was drawn out in conversation rather than written in one go, the agent drafts it
-back in the human's own words, gets it confirmed, and marks it — a trailing
-*(elicited in conversation)* is enough. Worth knowing later whether the naivety was the
+If the brief was drawn out in conversation rather than written in one go, mark it with a
+trailing *(elicited in conversation)*. Worth knowing later whether the naivety was the
 human's or partly the agent's.
 
 #### `## Problem`
@@ -271,6 +272,36 @@ The line that matters is not questions versus no questions. It is this:
   document.
 - **Say what was inferred.** Where the agent fills a gap the brief left, that inference is
   flagged in the interview or lands in `## Open questions` — never silently.
+
+## The polish pass
+
+What comes out of your head first is rarely what you want committed to the repository. It
+rambles, it starts three sentences and finishes one, it has the important constraint buried in
+a subclause at the end. So before the brief is frozen, the agent cleans it up and shows you
+the result.
+
+**The polish is presentational, never substantive.** The distinction is the whole rule:
+
+| Polish does | Polish does not |
+| --- | --- |
+| Fix grammar, spelling, punctuation | Add a fact, constraint, or number you did not give |
+| Break a wall of text into sentences | Resolve an ambiguity you left open |
+| Cut filler, false starts, "so yeah anyway" | Insert a technical choice or an approach |
+| Put related thoughts next to each other | Reorder to imply a priority you did not state |
+| Trim a rambling aside to its point | Make it sound more decided than you were |
+
+**Hedges are content, not noise.** "I think", "not sure but", "maybe we should just" — these
+survive the polish untouched. They are the record of what was uncertain on day one, and
+polishing them into confident prose is the failure mode this rule exists to prevent. A brief
+that reads as more certain than you felt is worse than an unpolished one.
+
+**Nothing goes in that you have not seen.** The agent shows you the polished version and waits
+for a yes. You can edit it, or say "no, keep mine as it was" — a raw brief is a perfectly good
+brief. Only after you agree does it go into the spec and freeze.
+
+**The polish happens before the interview, not after.** Tempting to tidy it at the end when
+everyone understands the problem better — but that is exactly the contamination the freeze
+exists to prevent. By then you would be writing what you wish you had said.
 
 ## The interview
 

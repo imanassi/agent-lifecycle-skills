@@ -68,11 +68,13 @@ repeating them.
 1. **Asks what you are trying to achieve**, before proposing anything. The brief is expected
    to be half-formed; the agent helps draw it out — what triggered this, what you already
    tried, what "fixed" looks like. What it will not do is hand you a solution first.
-2. **Reads the relevant code**, so it does not waste your attention on questions the
+2. **Tidies your brief and shows it back.** Wording only — nothing added, no ambiguity
+   resolved, your hedges left intact. You agree it, then it freezes.
+3. **Reads the relevant code**, so it does not waste your attention on questions the
    repository could answer.
-3. **Interviews you in at most three batched rounds**, opening with the expensive-to-change
+4. **Interviews you in at most three batched rounds**, opening with the expensive-to-change
    things: the contract, the data model, the rollout, and how success gets checked.
-4. **Writes the spec and stops.** No implementation, and no offer to implement.
+5. **Writes the spec and stops.** No implementation, and no offer to implement.
 
 The spec has ten sections. `## Brief` keeps your own framing, frozen. `## Acceptance criteria`
 says what must be true; `## How to verify` says how an agent checks that for itself, and what

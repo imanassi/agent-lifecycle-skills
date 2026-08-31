@@ -37,13 +37,37 @@ not — *"sounds like you want exponential backoff with jitter, shall I write th
 them an answer they will anchor on, and everything after that measures your idea rather than
 theirs. No solutions, no designs, no technology choices until the brief exists.
 
-When the brief came out of conversation rather than arriving whole, write it up in **their**
-words, show it to them, and get a yes before continuing. Mark it *(elicited in conversation)*
-in the `## Brief` section. Never put a brief in the spec that they have not seen.
+### Polish it, then get a yes
 
-Once you move to step 2, the brief is frozen. It is not edited again — not tidied, not
-corrected, not revised later when the spec changes. It is allowed to look naive in hindsight;
-that is the point of keeping it.
+Raw first thoughts are rarely what anyone wants committed to a repository. Before the brief
+goes into the spec, clean it up and show the result back. Do this whether they wrote it in one
+go or you drew it out of them; if it was drawn out, also mark it *(elicited in conversation)*.
+
+**The polish is presentational, never substantive.**
+
+Do: fix grammar and spelling; break a wall of text into sentences; cut filler and false
+starts; put related thoughts together; trim a rambling aside down to its point.
+
+Do **not**: add a fact, constraint, or number they did not give; resolve an ambiguity they
+left open; insert a technical choice or an approach; reorder to imply a priority they did not
+state; make it read as more decided than they were.
+
+**Keep the hedges.** "I think", "not sure but", "maybe we should just" — leave them exactly as
+they are. They record what was uncertain on day one, and smoothing them into confident prose
+is the specific failure this rule exists to prevent. A brief that reads more certain than they
+felt is worse than an unpolished one.
+
+Then show it to them and wait:
+
+> Here's your brief cleaned up — I've only tidied the wording, nothing added or resolved.
+> Good to freeze this, or would you rather change something?
+
+Never put a brief in the spec they have not seen. If they prefer their raw version, keep it.
+
+Once they agree and you move to step 2, the brief is frozen. It is not edited again — not
+tidied further, not corrected, not revised later when the spec changes. Polish it now or not
+at all; polishing after the interview means writing what they wish they had said, which is
+exactly what the freeze exists to prevent.
 
 ## Step 2 — orient
 
