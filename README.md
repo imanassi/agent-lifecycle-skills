@@ -66,36 +66,8 @@ Everything is plain Markdown committed to your repo. No service, no database, no
 
 ```bash
 git clone git@github.com:imanassi/agent-lifecycle-skills.git
-./agent-lifecycle-skills/install.sh /path/to/my-project
+./agent-lifecycle-skills/sync.sh /path/to/my-project
 ```
-
-Creates what is missing and never touches what is already there.
-
-### Updating
-
-```bash
-git -C agent-lifecycle-skills pull
-./agent-lifecycle-skills/install.sh --update /path/to/my-project
-```
-
-Update is conservative, because the format specs are *meant* to be edited. It compares each
-file against a manifest written at install time and reports one of three things:
-
-| | |
-| --- | --- |
-| `current` | already matches upstream — nothing to do |
-| `update` | you never edited it, so it is refreshed in place |
-| `yours` | **you edited it** — yours is kept, and the new version is dropped beside it as `<file>.new` |
-
-Nothing you wrote is ever overwritten. Diff the leftovers when you want the newer wording:
-
-```bash
-git diff --no-index docs/specs/README.md docs/specs/README.md.new
-```
-
-Add `--dry-run` to see what would happen first. A project installed before update support
-existed has no manifest, so every file is treated as edited — you get `.new` files to diff
-rather than silent in-place changes.
 
 | Agent | Commands |
 | --- | --- |
@@ -103,9 +75,38 @@ rather than silent in-place changes.
 | Codex CLI | `$spec`, `$wrap` |
 | Gemini CLI, Aider, Windsurf, Copilot, … | via `AGENTS.md` |
 
-Then fill in the **Verification commands** block that `install.sh` appends to your
-`AGENTS.md` — the build and test commands for that project. Specs reference them instead of
-repeating them.
+Then fill in the **Verification commands** block that `sync.sh` appends to your `AGENTS.md` —
+the build and test commands for that project. Specs reference them instead of repeating them.
+
+### Updating
+
+The same command. There is no separate install/update mode to remember:
+
+```bash
+git -C agent-lifecycle-skills pull
+./agent-lifecycle-skills/sync.sh /path/to/my-project
+```
+
+A project with none of the files gets a fresh install; a project that already has them gets an
+update. Updating is conservative, because the two format specs are *meant* to be edited:
+
+| | |
+| --- | --- |
+| `create` | wasn't there — added |
+| `current` | already matches upstream — nothing to do |
+| `update` | you never edited it, so it is refreshed in place |
+| `yours` | **you edited it** — yours is kept untouched, the new version lands beside it as `<file>.new` |
+
+Nothing you wrote is ever overwritten, on this run or any later one. Diff a leftover when you
+want the newer wording, then delete it:
+
+```bash
+git diff --no-index docs/specs/README.md docs/specs/README.md.new
+```
+
+`--dry-run` shows what would happen and writes nothing. A project installed before `sync.sh`
+existed has no manifest, so every differing file is treated as edited — `.new` files to diff
+rather than silent in-place changes. That happens once; afterwards it tracks properly.
 
 ## What `/spec` does
 
