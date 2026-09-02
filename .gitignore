@@ -1,2 +1,5 @@
 .DS_Store
 *.swp
+
+# left behind by install.sh --update, delete once merged
+*.new

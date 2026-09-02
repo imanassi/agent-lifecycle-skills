@@ -69,7 +69,33 @@ git clone git@github.com:imanassi/agent-lifecycle-skills.git
 ./agent-lifecycle-skills/install.sh /path/to/my-project
 ```
 
-Never overwrites, so re-running after you have customised the formats is safe.
+Creates what is missing and never touches what is already there.
+
+### Updating
+
+```bash
+git -C agent-lifecycle-skills pull
+./agent-lifecycle-skills/install.sh --update /path/to/my-project
+```
+
+Update is conservative, because the format specs are *meant* to be edited. It compares each
+file against a manifest written at install time and reports one of three things:
+
+| | |
+| --- | --- |
+| `current` | already matches upstream — nothing to do |
+| `update` | you never edited it, so it is refreshed in place |
+| `yours` | **you edited it** — yours is kept, and the new version is dropped beside it as `<file>.new` |
+
+Nothing you wrote is ever overwritten. Diff the leftovers when you want the newer wording:
+
+```bash
+git diff --no-index docs/specs/README.md docs/specs/README.md.new
+```
+
+Add `--dry-run` to see what would happen first. A project installed before update support
+existed has no manifest, so every file is treated as edited — you get `.new` files to diff
+rather than silent in-place changes.
 
 | Agent | Commands |
 | --- | --- |
