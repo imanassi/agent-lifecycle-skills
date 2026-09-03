@@ -15,7 +15,9 @@ This procedure is agent-independent. Every agent runs these same steps.
 Run these, tolerating failures:
 
 ```bash
-date +%Y-%m-%d
+date +%Y-%m-%d-%H%M
+date +%Y-%m-%dT%H:%M%z
+git config user.name
 git branch --show-current
 git rev-parse --short HEAD
 git status --short
@@ -48,6 +50,9 @@ changed since this file was written.
   `unknown`. Never guess a marketing name from memory.
 - `spec` — if this session implemented a spec in `docs/specs/`, its path. Check the listing
   from step 1 and the conversation. Otherwise `null`.
+- `ended` — the second `date` command above, quoted. The offset matters: it is what keeps
+  wraps in order when people work in different timezones.
+- `author` — from `git config user.name`. If it is unset, ask rather than guessing.
 
 ## Step 4 — reconstruct the session
 
@@ -61,8 +66,11 @@ per the format spec. Do not quietly reconcile the two.
 
 ## Step 5 — write the file
 
-Choose the filename per the spec's naming rules, checking the step 1 listing for collisions.
-Create `docs/sessions/` if it does not exist.
+Name the file `YYYY-MM-DD-HHMM-<slug>.md` using the first `date` command from step 1, per the
+naming rules in the format spec. **If this session implemented a spec, the slug must be that
+spec's slug, character for character** — that is what makes the two documents visibly related
+in a directory listing, so do not paraphrase it or shorten it. A session with no spec gets a
+slug describing its own work. Create `docs/sessions/` if it does not exist.
 
 Do not stage or commit anything. Report the path you wrote and, in two or three lines, what
 you recorded, so the user can correct you before it lands.

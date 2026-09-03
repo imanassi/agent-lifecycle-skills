@@ -145,7 +145,8 @@ docs/specs/<slug>.md          ← specs. Named by feature. Mutable.
 
 docs/sessions/README.md       ← wrap format. Single source of truth. Edit this.
 docs/sessions/_TEMPLATE.md
-docs/sessions/YYYY-MM-DD-*.md ← wraps. Named by date. Append-only.
+docs/sessions/YYYY-MM-DD-HHMM-<slug>.md   ← wraps. Append-only.
+                                 date+time orders them; the slug ties them to a spec.
 
 .agents/skills/spec/SKILL.md  ← the procedure, agent-independent
 .agents/skills/wrap/SKILL.md

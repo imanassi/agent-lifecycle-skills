@@ -1,5 +1,6 @@
 ---
-date: 2026-08-24
+ended: "2026-08-24T18:40+0200"
+author: Ivo Manassi
 topic: Retry backoff for the Adyen capture call
 agent: claude-code
 model: unknown

@@ -1,5 +1,6 @@
 ---
-date: YYYY-MM-DD
+ended: "YYYY-MM-DDTHH:MM+ZZZZ"
+author: <who ran the session>
 topic: <one short line, sentence case>
 agent: <claude-code | codex | cursor | copilot | gemini-cli | aider | windsurf | other>
 model: <exact identifier, or unknown>

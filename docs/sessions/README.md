@@ -30,14 +30,33 @@ Optionally pass a topic: `/wrap payment retry backoff`.
 ## File naming
 
 ```
-docs/sessions/YYYY-MM-DD-<slug>.md
+docs/sessions/YYYY-MM-DD-HHMM-<slug>.md
 ```
 
-- `YYYY-MM-DD` — the date the session **ended**, local time.
-- `<slug>` — 2–5 lowercase hyphenated words describing the work. Not the agent name, not
-  "session". Good: `payment-retry-backoff`, `flyway-baseline-fix`. Bad: `session-2`,
-  `claude-work`, `updates`.
-- If the filename exists, append `-2`, then `-3`.
+- `YYYY-MM-DD-HHMM` — when the session **ended**, local time, 24-hour clock.
+- `<slug>` — 2–5 lowercase hyphenated words. Not the agent name, not "session".
+  Good: `payment-retry-backoff`, `flyway-baseline-fix`. Bad: `session-2`, `claude-work`.
+
+**The time is not decoration.** With a date alone, two sessions on the same day sort
+arbitrarily, and on a team it is worse than arbitrary: two people on separate branches each
+see no collision locally, so the order you end up with is whoever merged first. The minute
+makes the ordering deterministic and independent of merge order, and removes the need for
+any collision rule. In the vanishingly rare case two wraps land on the same minute, use the
+next minute.
+
+**If the session implemented a spec, the slug is the spec's slug — exactly.** This is what
+makes the relationship visible without opening anything:
+
+```bash
+ls docs/sessions/ | grep payment-retry-backoff   # every session on that spec, in order
+```
+
+A session with no spec gets a slug describing its own work.
+
+Wraps written before this convention used `YYYY-MM-DD-<slug>.md` and a `date:` field. They
+stay valid and still sort correctly, just without the minute. Do not rename them — they are
+history, and renaming history to match a newer convention is exactly the kind of tidying this
+folder exists to resist. New wraps use the new form.
 
 Never overwrite a wrap. Never edit a previous wrap except to correct a factual error.
 Wraps are append-only history — that is what makes them trustworthy. Specs, in
@@ -53,7 +72,8 @@ YAML frontmatter, then six fixed sections. Copy [`_TEMPLATE.md`](_TEMPLATE.md).
 
 ```yaml
 ---
-date: 2026-08-24             # required, YYYY-MM-DD, session end date
+ended: "2026-08-24T14:30+0200"  # required, ISO-8601 with offset, quoted
+author: Ivo Manassi          # required, whoever ran the session
 topic: Payment retry backoff # required, one short line, sentence case
 agent: claude-code           # required, controlled vocabulary below
 model: claude-opus-4-5       # required, or "unknown" — see the honesty rule
@@ -68,6 +88,13 @@ tags: [payments, resilience, spring-retry]
 files_changed: 7
 ---
 ```
+
+**`ended`** carries the UTC offset so wraps still sort correctly when people work in
+different timezones — the filename uses local time, which does not. Quote it, or YAML may
+reinterpret it. Produce it with `date +%Y-%m-%dT%H:%M%z`.
+
+**`author`** is who ran the session, from `git config user.name`. With one person it is
+noise; with three it is the first thing you want to know from a listing of frontmatter.
 
 **Controlled vocabulary for `agent`:** `claude-code`, `codex`, `cursor`, `copilot`,
 `gemini-cli`, `aider`, `windsurf`, `other`. Lowercase, hyphenated. Keeping it closed is
@@ -190,10 +217,16 @@ Write nothing rather than filler. `None.` is an acceptable and honest answer.
 ## Reading wraps back
 
 ```bash
-grep -rl "payments" docs/sessions/                 # everything touching payments
-grep -l "^status: abandoned" docs/sessions/*.md    # every approach we dropped
-grep -rl "docs/specs/payment-retry" docs/sessions/ # every session on one spec
+ls docs/sessions/                                   # the whole timeline, in order
+ls docs/sessions/ | grep payment-retry-backoff      # one spec's sessions, in order
+grep -rl "payments" docs/sessions/                  # everything touching payments
+grep -l "^status: abandoned" docs/sessions/*.md     # every approach we dropped
+grep -l "^author: Maria" docs/sessions/*.md         # one person's sessions
 ```
+
+Because the filename carries the time and the spec's slug, `ls` alone answers "what happened,
+in what order, and to which spec" — no index file to maintain and nothing to conflict when
+several people commit wraps on separate branches.
 
 When picking up unfamiliar work: *"Read the three most recent wraps in `docs/sessions/`
 before you start."*

@@ -5,8 +5,10 @@ Two documents from a fictional Java project (`com.acme.payments`).
 Two files showing the pair in use: a spec, and the session wrap that implemented it.
 
 - `spec-payment-retry-backoff.md` — as it would live at `docs/specs/payment-retry-backoff.md`
-- `wrap-2026-08-24-payment-retry-backoff.md` — as it would live at
-  `docs/sessions/2026-08-24-payment-retry-backoff.md`
+- `wrap-2026-08-24-1840-payment-retry-backoff.md` — as it would live at
+  `docs/sessions/2026-08-24-1840-payment-retry-backoff.md`. Note the slug matches the spec's
+  slug exactly: that is what makes `ls docs/sessions/ | grep payment-retry-backoff` return
+  every session that worked on it, in order.
 
 They are kept here rather than in `docs/` so `sync.sh` does not copy them into real
 projects. Paths *inside* them are repo-root-relative and written as they would be in a real
