@@ -46,9 +46,19 @@ Then the agent interviews you in **at most three short rounds**, writes the spec
 docs/specs/<slug>.md
 ```
 
-Named by **feature, not date** — a spec is revised in place, so a date in the filename would
-be a lie within a week. `<slug>` is 2–5 lowercase hyphenated words: `payment-retry-backoff`,
-`flyway-baseline-repair`.
+Named by **feature, not date**, and deliberately unlike a wrap. Three reasons, because this
+comes up:
+
+1. **A wrap's date is permanently true; a spec's would not be.** A wrap records a finished
+   event. A spec is revised in place, so a creation date in the filename says "September" for
+   a document that was mostly rewritten in March.
+2. **The filename is the slug**, which is what `spec: docs/specs/<slug>.md` in every wrap
+   points at, and what a wrap's own slug is prefixed with. Put a date in front and
+   `2026-09-03-1158-erezept-signing-pdf-flow.md` stops visibly pairing with its spec.
+3. **Ordering is already in the file.** `created:` and `updated:` are frontmatter fields;
+   see [Reading specs back](#reading-specs-back) for a one-liner that lists them in order.
+
+`<slug>` is 2–5 lowercase hyphenated words: `payment-retry-backoff`, `flyway-baseline-repair`.
 
 If a spec is replaced rather than revised, set the old one's `status: superseded` and
 `superseded_by:`, and keep it. Dropped approaches are worth reading.
@@ -356,7 +366,31 @@ point is that the default requires an action to escape.
 ## Reading specs back
 
 ```bash
-grep -l "^status: approved" docs/specs/*.md        # what is agreed but not built
+grep -l "^status: approved" docs/specs/*.md        # agreed but not built
 grep -l "^status: superseded" docs/specs/*.md      # approaches we replaced
-grep -rl "docs/specs/payment-retry" docs/sessions/ # every session on one spec
+ls docs/sessions/ | grep payment-retry-backoff     # every session on one spec, in order
+```
+
+Specs in the order they were created — `created`, `updated`, `status`, `slug`:
+
+```bash
+for f in docs/specs/*.md; do
+  b=$(basename "$f"); [ "$b" = "README.md" ] && continue; case "$b" in _*) continue ;; esac
+  awk -F':[ ]*' '/^slug:/{s=$2} /^status:/{st=$2} /^created:/{c=$2} /^updated:/{u=$2}
+                 /^---$/{if(++n==2) exit} END{printf "%s  %s  %-11s %s\n",c,u,st,s}' "$f"
+done | sort
+```
+
+```
+2026-08-28  2026-09-02  draft       payment-retry-backoff
+2026-09-02  2026-09-02  approved    flyway-baseline-repair
+```
+
+Pipe that into a loop to see each spec with the sessions that worked on it:
+
+```bash
+... | while read -r c u st s; do
+  printf "  %s (%s)\n" "$s" "$st"
+  ls docs/sessions/ | grep "^[0-9-]*-$s" | sed 's/^/      /'
+done
 ```
