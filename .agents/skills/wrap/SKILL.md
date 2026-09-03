@@ -67,10 +67,12 @@ per the format spec. Do not quietly reconcile the two.
 ## Step 5 — write the file
 
 Name the file `YYYY-MM-DD-HHMM-<slug>.md` using the first `date` command from step 1, per the
-naming rules in the format spec. **If this session implemented a spec, the slug must be that
-spec's slug, character for character** — that is what makes the two documents visibly related
-in a directory listing, so do not paraphrase it or shorten it. A session with no spec gets a
-slug describing its own work. Create `docs/sessions/` if it does not exist.
+naming rules in the format spec. **If this session implemented a spec, the slug must start with
+that spec's slug, character for character** — that is what makes the two documents visibly
+related in a directory listing, so do not paraphrase or shorten it. Add a short suffix saying
+what this session did whenever a wrap for that spec already exists, so the sessions stay
+distinguishable: `payment-retry-backoff-review-fixes`. Do not repeat words the spec slug
+already contains. A session with no spec gets a slug describing its own work. Create `docs/sessions/` if it does not exist.
 
 Do not stage or commit anything. Report the path you wrote and, in two or three lines, what
 you recorded, so the user can correct you before it lands.

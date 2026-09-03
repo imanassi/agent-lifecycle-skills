@@ -44,12 +44,25 @@ makes the ordering deterministic and independent of merge order, and removes the
 any collision rule. In the vanishingly rare case two wraps land on the same minute, use the
 next minute.
 
-**If the session implemented a spec, the slug is the spec's slug — exactly.** This is what
-makes the relationship visible without opening anything:
+**If the session implemented a spec, the slug starts with the spec's slug.** Anything after
+it says what this particular session did:
+
+```
+2026-08-24-0915-payment-retry-backoff.md                 first session on the spec
+2026-08-24-1840-payment-retry-backoff-audit-table.md     later session, same spec
+2026-08-26-0930-payment-retry-backoff-review-fixes.md    later still
+```
+
+The prefix makes the relationship visible without opening anything, and the suffix keeps the
+sessions distinguishable from each other:
 
 ```bash
 ls docs/sessions/ | grep payment-retry-backoff   # every session on that spec, in order
 ```
+
+Use the bare spec slug for the first session and add a suffix once there is more than one.
+Do not repeat words the spec slug already contains — `payment-retry-backoff-retry-fixes`
+reads badly; `payment-retry-backoff-review-fixes` does not.
 
 A session with no spec gets a slug describing its own work.
 

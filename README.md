@@ -104,6 +104,11 @@ want the newer wording, then delete it:
 git diff --no-index docs/specs/README.md docs/specs/README.md.new
 ```
 
+**Commit `.agents/.agent-lifecycle-skills.manifest`.** It records which upstream version each
+file came from, and it is what lets a later sync tell your edits from staleness. Leave it
+untracked and every teammate's first sync sees no baseline and reports the whole set as
+`yours`.
+
 `--dry-run` shows what would happen and writes nothing. A project installed before `sync.sh`
 existed has no manifest, so every differing file is treated as edited — `.new` files to diff
 rather than silent in-place changes. That happens once; afterwards it tracks properly.
