@@ -76,3 +76,10 @@ here and no named owner is decoration — give it a check or move it out of scop
 ## Open questions
 
 - <question> — <what would resolve it>. <blocks starting | does not block>.
+
+## Jira summary
+
+<Ready-to-paste business summary: current problem and affected people; proposed change and
+expected outcome; observable success; material scope limits, dependencies, or open decisions.
+Use plain language, normally 100–200 words or fewer. Describe planned work as proposed.
+Preserve uncertainty; do not invent benefits or commitments. Omit code paths and test commands.>

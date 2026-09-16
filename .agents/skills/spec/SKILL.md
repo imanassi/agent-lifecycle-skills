@@ -175,6 +175,12 @@ own. An agent cannot audit its own judgement, so "review the code and confirm it
 is worthless there. If a criterion has no runnable check, name the human who checks it by
 hand and when; if it has neither, it does not belong in the acceptance list.
 
+Finish the spec with `## Jira summary`, following the format definition. Derive it from the
+finished spec, not just the original brief. It must be ready to paste into a Jira description
+or comment and understandable without reading the technical sections. Repeat the same summary
+at the end of the final response. Generate the text even when no Jira ticket is linked;
+do not post it without explicit authorization.
+
 ## Step 5 — stop
 
 **Do not start implementing. Do not offer to start implementing.** Do not begin editing
@@ -199,6 +205,10 @@ To implement, open a fresh session and say:
   approval before writing implementation code. Then implement and refactor with
   approved tests passing. Return changed expectations for review. Run the checks
   in "How to verify" and report gaps honestly. Ask before deviating from the spec.
+
+Jira summary — ready to paste:
+
+<the same business-language summary saved in the spec, without the implementation prompt>
 ```
 
 If the user explicitly says to continue anyway — "and start now" or similar — do it. The

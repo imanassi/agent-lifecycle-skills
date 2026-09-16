@@ -129,9 +129,12 @@ rather than silent in-place changes. That happens once; afterwards it tracks pro
    things: the contract, the data model, the rollout, and how success gets checked.
 5. **Writes the spec and stops.** No implementation, and no offer to implement.
 
-The spec has ten sections. `## Brief` keeps your own framing, frozen. `## Acceptance criteria`
+The spec has eleven sections. `## Brief` keeps your own framing, frozen. `## Acceptance criteria`
 says what must be true; `## How to verify` says how an agent checks that for itself, and what
-has to be stood up first. `## Out of scope` is the one that saves the most rework.
+has to be stood up first. `## Out of scope` is the one that saves the most rework. A final `## Jira summary`
+translates the finished spec into business language: problem, proposed outcome, observable
+success, and material limitations. The same ready-to-paste text ends the agent's response,
+so it can go straight into a Jira description or comment. It is not posted automatically.
 
 ## Ticket context and human understanding
 

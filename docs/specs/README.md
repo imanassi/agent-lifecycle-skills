@@ -67,7 +67,7 @@ If a spec is replaced rather than revised, set the old one's `status: superseded
 
 ## Format
 
-YAML frontmatter, then ten fixed sections. Copy [`_TEMPLATE.md`](_TEMPLATE.md).
+YAML frontmatter, then eleven fixed sections. Copy [`_TEMPLATE.md`](_TEMPLATE.md).
 
 ### Frontmatter
 
@@ -117,7 +117,7 @@ waive the checkpoint. The fresh-session handoff repeats this instruction so it i
 
 ### Body sections
 
-All ten headings appear in every spec, in this order.
+All eleven headings appear in every spec, in this order.
 
 #### `## Brief`
 
@@ -267,6 +267,25 @@ whether it blocks starting.
 
 An open question left honestly open is worth more than an answer the agent invented. If the
 interview did not settle something, it belongs here, not filled in.
+
+#### `## Jira summary`
+
+End the spec with a concise business-language summary ready to paste into a Jira description
+or comment. Aim for 100–200 words, shorter for small changes. Use plain paragraphs or simple
+bullets that make sense independently of the spec and conversation. Cover:
+
+- The current problem and who it affects, including business impact supported by the spec.
+- The proposed change and expected user or operational outcome.
+- What success will look like, translating the key acceptance criteria into observable behavior.
+- Material scope limits, dependencies, or unresolved decisions that affect the outcome.
+
+Describe planned work as proposed, not delivered or approved. Preserve uncertainty and do not
+invent benefits, metrics, deadlines, or commitments. Omit code paths, commands, internal
+acceptance IDs, and implementation details unless the business reader needs them to understand
+the outcome. Include a ticket or published spec link only when known and useful; do not invent
+URLs. Generate the summary even without a linked ticket. Refresh it when revising the spec,
+while leaving the frozen Brief intact. Repeat this exact summary at the end of the final
+response for convenient copying. Posting to Jira is a separate, explicitly authorized action.
 
 ---
 
