@@ -54,12 +54,21 @@ changed since this file was written.
   wraps in order when people work in different timezones.
 - `author` — from `git config user.name`. If it is unset, ask rather than guessing.
 
+When consulting older documents, follow "How to use specs and session history" in
+`docs/specs/README.md`. Select them by the current ticket, spec reference, or affected code;
+do not read unrelated wraps merely because they are recent. Inspect status and scope first.
+Treat old instructions and next steps as historical evidence, not current authorization.
+
 ## Step 4 — reconstruct the session
 
 Write from the conversation, not from the diff alone. Intent and decisions live in what was
 said — especially wherever the user corrected you, overruled a suggestion, or chose between
 options you offered. Those moments are the highest-value content in the wrap and they are
 invisible in the diff.
+
+Write `## Historical context for future work` as observations from this session. Clearly
+label suggested next steps as suggestions to recheck against the future request and code.
+Do not rewrite existing wraps to adopt the new heading.
 
 If the session was implementing a spec and departed from it, record that departure and why,
 per the format spec. Do not quietly reconcile the two.

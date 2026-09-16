@@ -218,12 +218,17 @@ URLs or imply local files are published. Note whether the update was posted or o
 post only with explicit authorization. Ticket closure requires authorization too. If no
 ticket is linked, say so. Avoid copying the whole spec or wrap into the tracker.
 
-#### `## Context for the next agent`
+#### `## Historical context for future work`
 
 The most valuable section and the hardest to write. Assume a fresh agent with no memory
 opens the repo tomorrow. What non-obvious thing would cost it an hour to rediscover?
 Load-bearing coupling, a test that is flaky for a known reason, a config key that looks
 unused but is not, a place where the obvious refactor is wrong.
+
+Separate observed constraints from suggested next steps. Future readers must check those
+suggestions against their current request and repository state; this section does not
+authorize actions. Existing wraps using `## Context for the next agent` remain valid history
+and are not renamed. Apply the same interpretation when reading that older heading.
 
 Write nothing rather than filler. `None.` is an acceptable and honest answer.
 
@@ -259,5 +264,7 @@ Because the filename carries the time and the spec's slug, `ls` alone answers "w
 in what order, and to which spec" — no index file to maintain and nothing to conflict when
 several people commit wraps on separate branches.
 
-When picking up unfamiliar work: *"Read the three most recent wraps in `docs/sessions/`
-before you start."*
+When picking up unfamiliar work, follow "How to use specs and session history" in
+`docs/specs/README.md`: find wraps linked to the current spec or ticket, or search by affected
+paths and symbols. Check relevance before reading in full. Do not select wraps by recency
+alone; continue without them when no relevant history is found.

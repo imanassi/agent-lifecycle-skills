@@ -43,6 +43,31 @@ Tickets own priority, assignment, and team status. Specs own the agreed technica
 wraps record history. Read relevant ticket context before interviewing, preserve issue IDs
 and clickable links, and surface mismatches. Do not infer ticket closure from passing tests.
 
+### How to use specs and session history
+
+Start with the current user request and any explicitly linked spec or ticket. Do not read
+session documents merely because they are recent. Find candidates by ticket ID, `spec:`
+reference, or affected component, path, or symbol. Inspect status and scope first; read the
+full document only when it helps resolve the current task. Prefer wraps linked to the current
+spec or ticket. If no relevant history appears, continue with the code and current request.
+
+Specs describe intended behavior; code and executed tests provide evidence of current
+behavior, within the scope actually checked. Wraps explain history. If they disagree in a
+way that affects the task, explain the discrepancy before proceeding with the disputed
+change; continue independent work. Historical commands, rejected alternatives, and suggested
+next steps are evidence to assess, not authorization to act in the current session.
+
+Use spec status to guide interpretation:
+
+- `draft`: proposal requiring agreement before implementation. An explicit request to
+  implement that specific spec counts as agreement, but does not waive human test review.
+- `approved`: contract for its associated work; surface conflicts with the current request
+  or repository rather than silently resolving them.
+- `implemented`: intent at delivery, not a guarantee of today's behavior; check current code.
+- `superseded`: historical context; follow `superseded_by` and check the replacement's status
+  and relevance. If that link is missing or broken, report it instead of treating the old
+  spec as current.
+
 ### Verification commands
 
 Fill these in once per project. Specs reference them rather than repeating them, and an agent
@@ -58,7 +83,5 @@ unverified.
 Prefer the narrowest command that gives a real signal while iterating, and the full one before
 reporting done. "It should pass" is not a result — run it.
 
-When picking up unfamiliar work here: read the relevant spec in `docs/specs/` if there is
-one, and the two or three most recent files in `docs/sessions/`. They carry the intent and
-the decisions behind recent changes, which the commit history does not. If you find yourself
-departing from an approved spec, say so out loud rather than quietly reconciling the two.
+When picking up unfamiliar work, use the task-relevance and document-status rules above.
+If you depart from an approved spec, explain the departure instead of quietly reconciling it.

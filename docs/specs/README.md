@@ -88,8 +88,8 @@ superseded_by: null      # docs/specs/<slug>.md when status is superseded
 
 - **draft** — written, not yet agreed. Do not build from it.
 - **approved** — agreed. This is what gets implemented.
-- **implemented** — built and merged. Kept as the record of intent. Wraps referencing it
-  stay valid.
+- **implemented** — built and merged. Records intent at delivery, not necessarily current
+  behavior. Check the current code; wraps referencing it remain valid history.
 - **superseded** — replaced by another spec. Keep the file; set `superseded_by`.
 
 An explicit request to implement a specific spec counts as agreement to that spec; update
@@ -97,6 +97,31 @@ its status accordingly. This does not approve test expectations that have not be
 
 Whoever moves a spec to `approved` is asserting they read it. That is the entire point of
 the status field, and the entire point of the command stopping.
+
+### How to use specs and session history
+
+Start with the current user request and any explicitly linked spec or ticket. Do not read
+session documents merely because they are recent. Find candidates by ticket ID, `spec:`
+reference, or affected component, path, or symbol. Inspect status and scope first; read the
+full document only when it helps resolve the current task. Prefer wraps linked to the current
+spec or ticket. If no relevant history appears, continue with the code and current request.
+
+Specs describe intended behavior; code and executed tests provide evidence of current
+behavior, within the scope actually checked. Wraps explain history. If they disagree in a
+way that affects the task, explain the discrepancy before proceeding with the disputed
+change; continue independent work. Historical commands, rejected alternatives, and suggested
+next steps are evidence to assess, not authorization to act in the current session.
+
+Use spec status to guide interpretation:
+
+- `draft`: proposal requiring agreement before implementation. An explicit request to
+  implement that specific spec counts as agreement, but does not waive human test review.
+- `approved`: contract for its associated work; surface conflicts with the current request
+  or repository rather than silently resolving them.
+- `implemented`: intent at delivery, not a guarantee of today's behavior; check current code.
+- `superseded`: historical context; follow `superseded_by` and check the replacement's status
+  and relevance. If that link is missing or broken, report it instead of treating the old
+  spec as current.
 
 ### Ticket traceability and implementation workflow
 

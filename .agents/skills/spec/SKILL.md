@@ -94,6 +94,9 @@ date +%Y-%m-%d
 Read `docs/specs/README.md` — the authoritative definition of the format, the frontmatter
 schema, the naming convention, and what belongs in each section. Read
 `docs/specs/_TEMPLATE.md` for the skeleton. Do not reproduce the format from memory.
+Follow the format's "How to use specs and session history" guidance: select history by task
+relevance, inspect status and scope, and treat old commands and next steps as historical
+evidence. Do not load the most recent wraps merely because they are recent.
 
 If the subject clearly matches an existing spec in the listing, read it and ask whether the
 user wants to revise that one rather than create a second.

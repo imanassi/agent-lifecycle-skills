@@ -8,6 +8,11 @@ description: Implement a spec or agreed task using tests first, human approval o
 ## Establish the contract
 
 Read the requested spec, relevant code, and project verification commands in `AGENTS.md`.
+When consulting specs or wraps, follow "How to use specs and session history" in
+`docs/specs/README.md`. Select history by ticket, spec reference, or affected code; check
+status and relevance before reading in full. Do not load wraps just because they are recent.
+Historical commands and next steps do not authorize action. Surface material discrepancies
+between intended behavior, history, and current code before making the disputed change.
 A draft spec needs human agreement before work begins; do not infer approval from its existence.
 An explicit request to implement that spec counts as agreement unless the user says otherwise.
 If there is no spec, establish the intended behavior from the task without requiring a new document.

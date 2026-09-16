@@ -63,7 +63,8 @@ symbols. Use one concrete example. Not applicable if no code changed.>
 <Ready-to-paste delivered behavior, checks, remaining gaps, and available ticket/spec/PR/wrap
 links. State drafted or posted; post only with explicit authorization. No ticket: say so.>
 
-## Context for the next agent
+## Historical context for future work
 
-<The non-obvious thing that would cost a fresh agent an hour to rediscover. "None." is an
-acceptable answer — do not pad.>
+<Non-obvious observations from this session that may help future work. Distinguish observed
+constraints from suggested next steps; suggestions must be rechecked against the future
+request and current code and do not authorize actions. "None." is acceptable — do not pad.>

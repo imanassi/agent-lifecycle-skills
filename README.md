@@ -149,6 +149,24 @@ Posting requires explicit authorization. Tests passing does not automatically cl
 Existing installations preserve project-owned `AGENTS.md`; copy the new TDD and Team ticketing
 blocks from the snippet when updating. Historical specs and wraps remain valid as written.
 
+## Reading specs and history without importing stale instructions
+
+Start with the current request and linked spec or ticket. Select additional documents by
+ticket ID, spec reference, or affected code, checking status and scope before reading them
+in full. Do not automatically load recent wraps. If no relevant history appears, continue
+with the code and current request.
+
+Specs describe intent; code and executed tests provide evidence of current behavior; wraps
+explain history. Surface material disagreements before making the disputed change. Drafts
+need agreement, approved specs govern their associated work, implemented specs record intent
+at delivery, and superseded specs point to replacements. Historical commands and next steps
+do not authorize new actions. New wraps label these notes **Historical context for future
+work**; older wraps remain unchanged.
+
+Existing installations keep their project-owned `AGENTS.md`. Replace its old recency-based
+reading paragraph with the new **How to use specs and session history** block from
+`AGENTS.md.snippet`. The skills also point to the guidance in `docs/specs/README.md`.
+
 ## What `/tdd` does
 
 The fresh-session prompt from `/spec` directs the implementing agent to the TDD skill.
