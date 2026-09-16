@@ -22,7 +22,7 @@ superseded_by: null
 ## Problem
 
 <What is wrong today and what it costs. Concrete, with evidence where evidence exists.
-Do not describe the solution here.>
+Do not describe the solution here. Include clickable ticket source links when available.>
 
 ## Constraints
 
@@ -30,7 +30,7 @@ Do not describe the solution here.>
 
 ## Approach
 
-<A few paragraphs at the level of components and responsibilities, not code.>
+<Components and responsibilities, plus one concrete example of current → proposed behavior.>
 
 **Chose <X> over <Y>** because <reason>.
 
@@ -50,11 +50,16 @@ rollback. One sentence if there are no rollout concerns.>
 
 ## Acceptance criteria
 
-- <observable behaviour someone else could check>.
+- **AC-1** — <observable behavior; linked ticket requirement where available>.
 
 ## How to verify
 
-<Executable checks only. "Looks correct" is not verification.>
+Use `.agents/skills/tdd/SKILL.md`: write and run acceptance tests first, present scenarios,
+expected outcomes, and observed failures, then wait for explicit human approval before
+implementation. Implement and refactor with approved tests passing. Changed expectations
+require renewed review. Record any explicit waiver; starting implementation is not a waiver.
+
+<For each acceptance ID, name its test scenario and check. "Looks correct" is not verification.>
 
 - `<narrowest command — the tight loop>` — <what it proves, how long it takes>.
 - `<full command — before declaring done>`.

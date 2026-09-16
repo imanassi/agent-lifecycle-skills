@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# agent-lifecycle-skills — sync /spec and /wrap into a project.
+# agent-lifecycle-skills — sync /spec, /tdd, and /wrap into a project.
 # https://github.com/imanassi/agent-lifecycle-skills
 #
 #   ./sync.sh /path/to/project              install, or update if already there
@@ -39,8 +39,10 @@ docs/sessions/README.md
 docs/sessions/_TEMPLATE.md
 .agents/skills/spec/SKILL.md
 .agents/skills/wrap/SKILL.md
+.agents/skills/tdd/SKILL.md
 .claude/skills/spec/SKILL.md
-.claude/skills/wrap/SKILL.md"
+.claude/skills/wrap/SKILL.md
+.claude/skills/tdd/SKILL.md"
 
 hash_of() {
   if command -v shasum >/dev/null 2>&1; then shasum -a 256 "$1" | cut -d' ' -f1
@@ -63,7 +65,7 @@ done
 [ -f "$DEST/$MANIFEST_REL" ] && MODE="update"
 
 if [ "$MODE" = "install" ]; then
-  echo "Installing /spec and /wrap into $DEST"
+  echo "Installing /spec, /tdd, and /wrap into $DEST"
 else
   echo "Already installed — updating $DEST"
   if [ ! -f "$DEST/$MANIFEST_REL" ]; then
@@ -112,6 +114,8 @@ done
 # AGENTS.md belongs to the project: only ever appended to, never rewritten.
 if [ -f "$DEST/AGENTS.md" ] && grep -q "Specs and session wraps" "$DEST/AGENTS.md" 2>/dev/null; then
   say skip "AGENTS.md (already wired up)"
+  echo "  Review AGENTS.md.snippet in the source for TDD routing and Team ticketing settings."
+  echo "  Existing AGENTS.md is preserved; new specs also link directly to the TDD skill."
 else
   [ "$DRY" -eq 1 ] || sed '1,/^-->$/d' "$SRC/AGENTS.md.snippet" >> "$DEST/AGENTS.md"
   say append "AGENTS.md"
@@ -134,13 +138,14 @@ if [ "$MODE" = "install" ]; then
 cat <<'EOM'
 Done.
 
-  Claude Code, Cursor   /spec   /wrap
-  Codex CLI             $spec   $wrap
+  Claude Code, Cursor   /spec   /tdd   /wrap
+  Codex CLI             $spec   $tdd   $wrap
   Anything else         AGENTS.md tells it what to do
 
 Next:
   1. Fill in the Verification commands block appended to AGENTS.md — the build
-     and test commands for this project. Specs reference them.
+     and test commands for this project. Specs reference them. Configure the Team
+     ticketing block too if the project uses a tracker.
   2. Read docs/specs/README.md and docs/sessions/README.md and adjust them to
      your taste; they are the single source of truth for the two formats.
   3. Commit the lot.

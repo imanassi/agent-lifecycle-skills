@@ -69,6 +69,18 @@ tidied further, not corrected, not revised later when the spec changes. Polish i
 at all; polishing after the interview means writing what they wish they had said, which is
 exactly what the freeze exists to prevent.
 
+### Ticket context
+
+When given a ticket ID or URL, use the project's tracker settings in `AGENTS.md` and an
+available connector or CLI to read its description, relevant discussion, and dependencies.
+If access is unavailable, ask for the relevant text; never invent ticket contents. A ticket
+can supply the starting brief, but show the extracted requirements and distinguish them from
+the human's additions before freezing it. Read ticket context before interviewing.
+Record IDs in `tickets:` and clickable source links in the Problem section. Surface conflicts
+between ticket requirements and the proposed spec. Do not post updates without authorization.
+The ticket owns priority, assignment, and team status; the spec owns the agreed technical
+approach; wraps record history. Do not silently synchronize whole documents.
+
 ## Step 2 — orient
 
 Run these, tolerating failures:
@@ -148,6 +160,13 @@ Where the spec ends up contradicting the brief — the work turned out to be som
 than what they first described — say so in `## Approach`. Do not silently rewrite the brief
 to agree with the conclusion.
 
+Explain current and proposed behavior through one concrete example in `## Approach`, naming
+its main components. Give acceptance criteria stable IDs (AC-1, AC-2, …); preserve IDs on
+revision and never reuse removed IDs. Map them to ticket requirements where available.
+In `## How to verify`, require `.agents/skills/tdd/SKILL.md`: tests first, observed failures,
+human approval of expectations before implementation, then green and refactor. Record any
+explicitly agreed exception. A request to continue now does not waive test review by itself.
+
 Write acceptance criteria as things someone else could check, not as implementation notes.
 They become the `## Verification` section of the wrap that implements this spec.
 
@@ -174,9 +193,12 @@ Spec written: docs/specs/<slug>.md   (status: draft)
 Open questions left unresolved: <count, or none>
 
 To implement, open a fresh session and say:
-  Read docs/specs/<slug>.md and implement it. Work against its acceptance criteria,
-  running the commands in "How to verify" as you go — do not report done until they
-  pass. Ask before deviating from the spec.
+  Read docs/specs/<slug>.md and implement it using .agents/skills/tdd/SKILL.md.
+  First write and run tests for its acceptance criteria. Present the scenarios,
+  expected outcomes, and observed failures for human review. Wait for explicit
+  approval before writing implementation code. Then implement and refactor with
+  approved tests passing. Return changed expectations for review. Run the checks
+  in "How to verify" and report gaps honestly. Ask before deviating from the spec.
 ```
 
 If the user explicitly says to continue anyway — "and start now" or similar — do it. The

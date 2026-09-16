@@ -64,6 +64,17 @@ invisible in the diff.
 If the session was implementing a spec and departed from it, record that departure and why,
 per the format spec. Do not quietly reconcile the two.
 
+### Traceability and human handoff
+
+Carry ticket IDs and source URLs from the implemented spec or explicit session context;
+include known PR links without inventing them. In Verification, map acceptance IDs to the
+reviewed scenarios, actual results, and remaining gaps. Record human approval or an explicit
+waiver only when supported by the conversation; otherwise say review was not established.
+Add a short code-reading route through the actual change, following the format spec.
+For linked tickets, prepare a concise update covering delivered behavior, verification,
+remaining work, and available spec/PR/wrap links. Post only when explicitly authorized;
+otherwise leave it ready to paste. Do not close tickets or infer team status from test results.
+
 ## Step 5 — write the file
 
 Name the file `YYYY-MM-DD-HHMM-<slug>.md` using the first `date` command from step 1, per the

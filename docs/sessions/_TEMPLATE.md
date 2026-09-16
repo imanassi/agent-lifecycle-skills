@@ -43,6 +43,8 @@ changed public API or wire format, deploy-order constraints.>
 
 - `<command>` — <outcome>.
 - Not covered: <gap>.
+- Human test review: <approved scenarios and references, explicit waiver, or not established>.
+- <AC-ID> → <reviewed scenario/test> → <actual result>.
 
 <Where this session implemented a spec, list each of its acceptance criteria as met /
 not met / not checked, with the command that decided it. Only what actually ran.>
@@ -50,6 +52,16 @@ not met / not checked, with the command that decided it. Only what actually ran.
 ## Open questions & risks
 
 - <question> — <what would resolve it>.
+
+## How to read this change
+
+<Entry point → execution path → key invariant → demonstrating test, with actual paths and
+symbols. Use one concrete example. Not applicable if no code changed.>
+
+## Ticket update
+
+<Ready-to-paste delivered behavior, checks, remaining gaps, and available ticket/spec/PR/wrap
+links. State drafted or posted; post only with explicit authorization. No ticket: say so.>
 
 ## Context for the next agent
 

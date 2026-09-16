@@ -79,7 +79,7 @@ Wraps are append-only history — that is what makes them trustworthy. Specs, in
 
 ## Format
 
-YAML frontmatter, then six fixed sections. Copy [`_TEMPLATE.md`](_TEMPLATE.md).
+YAML frontmatter, then eight fixed sections. Copy [`_TEMPLATE.md`](_TEMPLATE.md).
 
 ### Frontmatter
 
@@ -130,7 +130,7 @@ folder, so write them.
 
 ### Body sections
 
-All six headings appear in every wrap, in this order, even when the answer is "None."
+All eight headings appear in every wrap, in this order, even when the answer is "None."
 
 #### `## Intent`
 
@@ -175,7 +175,10 @@ break other people.
 
 #### `## Verification`
 
-How we know it works. Exact commands and outcomes.
+How we know it works. Exact commands and outcomes. Map stable acceptance IDs to test
+scenarios and results. Record which expectations the human approved, any explicit waiver,
+and any later changes reviewed. If review cannot be established, say so; do not infer it
+from passing tests. Older sessions without this workflow remain valid historical records.
 
 ```markdown
 - `./mvnw -pl payments verify` — pass (142 tests).
@@ -199,6 +202,21 @@ were verified is not.
 #### `## Open questions & risks`
 
 Unresolved things, in priority order. Each names what would resolve it.
+
+#### `## How to read this change`
+
+Give a short reading route for a human: entry point, execution path, key invariant, and the
+test that demonstrates the behavior. Use actual paths and symbol names; prefer commit links
+when available for durable references. Explain one concrete example rather than restating
+the file list. For sessions without code changes, say not applicable.
+
+#### `## Ticket update`
+
+For linked tickets, provide ready-to-paste text: delivered behavior, verification, remaining
+gaps, and available ticket/spec/PR/wrap links. Keep `tickets:` as issue keys. Do not invent
+URLs or imply local files are published. Note whether the update was posted or only drafted;
+post only with explicit authorization. Ticket closure requires authorization too. If no
+ticket is linked, say so. Avoid copying the whole spec or wrap into the tracker.
 
 #### `## Context for the next agent`
 

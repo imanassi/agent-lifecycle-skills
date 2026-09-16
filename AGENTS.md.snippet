@@ -24,6 +24,25 @@ fact. When the user invokes `/wrap` or `$wrap`, or asks to wrap up the session: 
 
 Do not write either document unless the user asks for one.
 
+### Test-driven implementation
+
+When asked for TDD or implementing a spec that requires it, read
+`.agents/skills/tdd/SKILL.md`. Write and run tests, present their expectations and observed
+failures, and wait for human approval before implementing. An implementation request alone
+does not waive test review. Use `/tdd` or `$tdd` to invoke this workflow directly.
+
+### Team ticketing
+
+Configure these once per project; leave unset if no tracker is used:
+
+- Tracker URL and issue-key convention: `<URL; e.g. TEAM-123>`
+- Available connector or CLI: `<tool and read command, or paste ticket text>`
+- Posting policy: `<draft updates by default; explicit authorization required to post>`
+
+Tickets own priority, assignment, and team status. Specs own the agreed technical approach;
+wraps record history. Read relevant ticket context before interviewing, preserve issue IDs
+and clickable links, and surface mismatches. Do not infer ticket closure from passing tests.
+
 ### Verification commands
 
 Fill these in once per project. Specs reference them rather than repeating them, and an agent

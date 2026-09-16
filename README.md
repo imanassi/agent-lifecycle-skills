@@ -1,10 +1,11 @@
 # agent-lifecycle-skills
 
-**Interactive specs and session debriefs for AI coding agents.**
+**Ticket-linked specs, human-reviewed TDD, and session debriefs for AI coding agents.**
 
 Bookend your agent sessions. `/spec` interviews you *before* the work and writes a task
 contract. `/wrap` debriefs the session *after* and records what was decided, changed, and
-verified. Both behave identically in Claude Code, Codex CLI, Cursor, and anything that reads
+verified. Between them, `/tdd` writes tests, waits for human review, and implements. All three
+workflows use the same instructions in Claude Code, Codex CLI, Cursor, and agents that read
 `AGENTS.md`.
 
 ```mermaid
@@ -19,7 +20,7 @@ flowchart TD
     STOP{{"<b>HARD STOP</b><br/>you read the spec<br/>no code written yet"}}
 
     subgraph S2["<b>SESSION 2</b> · build, on a clean context"]
-        D["<b>Agent implements</b><br/>from the spec only,<br/>not the interview<br/>runs the spec's checks<br/>until they pass"]
+        D["<b>/tdd</b><br/>from the spec<br/>writes and runs tests<br/>waits for human test approval<br/>implements and refactors"]
         E["<b>/wrap</b><br/>reads the session<br/>and the diff"]
         F["<b>docs/sessions/&lt;date&gt;.md</b><br/>what happened<br/>what was decided, and why"]
         D --> E --> F
@@ -52,11 +53,13 @@ lost context at the end — you explain the constraint once, the agent drifts, a
 sessions later nobody remembers why the retry policy looks like that. The diff records what
 changed and nothing records why.
 
-These are two lightweight, repository-native commands that close both ends:
+These are three lightweight, repository-native commands that close both ends:
 
 - **`/spec`** draws out what you actually want — edge cases, constraints, acceptance criteria,
   and the runnable checks that prove them — into a task contract the implementing session can
   work against on its own.
+- **`/tdd`** writes and runs acceptance tests, waits for human approval of their expectations,
+  then implements and refactors while keeping those tests passing.
 - **`/wrap`** reads the session and the diff and writes down the decisions, the rejected
   alternatives, what was verified, and what the next agent needs to know.
 
@@ -71,8 +74,8 @@ git clone git@github.com:imanassi/agent-lifecycle-skills.git
 
 | Agent | Commands |
 | --- | --- |
-| Claude Code, Cursor | `/spec`, `/wrap` |
-| Codex CLI | `$spec`, `$wrap` |
+| Claude Code, Cursor | `/spec`, `/tdd`, `/wrap` |
+| Codex CLI | `$spec`, `$tdd`, `$wrap` |
 | Gemini CLI, Aider, Windsurf, Copilot, … | via `AGENTS.md` |
 
 Then fill in the **Verification commands** block that `sync.sh` appends to your `AGENTS.md` —
@@ -130,6 +133,35 @@ The spec has ten sections. `## Brief` keeps your own framing, frozen. `## Accept
 says what must be true; `## How to verify` says how an agent checks that for itself, and what
 has to be stood up first. `## Out of scope` is the one that saves the most rework.
 
+## Ticket context and human understanding
+
+Configure the tracker, issue-key convention, available connector or CLI, and posting policy
+in the project's `AGENTS.md` using `AGENTS.md.snippet`. `/spec` can begin from a ticket ID or
+URL and reads relevant context before interviewing. Without access, paste the ticket text.
+Tickets own priority, assignment, and team status; specs own the agreed technical approach;
+wraps record history. Stable acceptance IDs connect requirements to tests and results.
+
+`/wrap` includes a short code-reading route and a ticket-ready update with available links.
+Posting requires explicit authorization. Tests passing does not automatically close tickets.
+Existing installations preserve project-owned `AGENTS.md`; copy the new TDD and Team ticketing
+blocks from the snippet when updating. Historical specs and wraps remain valid as written.
+
+## What `/tdd` does
+
+The fresh-session prompt from `/spec` directs the implementing agent to the TDD skill.
+The spec's **How to verify** section carries the same requirement, so simply asking to
+implement the spec also discovers the workflow.
+
+1. Write behavior tests mapped to acceptance IDs and run them to establish meaningful failures.
+2. Present a small set of scenarios, expected outcomes, test references, and observed failures.
+3. Wait for explicit human approval of expectations before writing implementation code.
+4. Implement, then refactor with approved tests passing. Changed expectations return for review.
+5. Report results and a reading route through the code. An interactive walkthrough is optional.
+
+The checkpoint is required by default and can be explicitly waived. Asking to start work does
+not itself waive it. Manual-only behavior needs an agreed scenario, reviewer, and timing.
+Approval concerns the intended behavior; the agent remains responsible for test execution.
+
 ## What `/wrap` does
 
 Reconstructs the session from the conversation and the diff, then writes: intent, decisions
@@ -155,7 +187,8 @@ docs/sessions/YYYY-MM-DD-HHMM-<slug>.md   ← wraps. Append-only.
 
 .agents/skills/spec/SKILL.md  ← the procedure, agent-independent
 .agents/skills/wrap/SKILL.md
-.claude/skills/*/SKILL.md     ← two-line pointers at the above
+.agents/skills/tdd/SKILL.md
+.claude/skills/*/SKILL.md     ← pointers at the above
 AGENTS.md                     ← fallback for everything else, plus build commands
 
 examples/                     ← a filled-in spec and the wrap that implemented it
@@ -169,7 +202,7 @@ format; nothing agent-specific lives in either.
 
 `.agents/skills/` is the [Agent Skills](https://agentskills.io) open standard — Codex scans it
 at the repo root and Cursor reads it natively, so one file covers both. Claude Code does not
-read that path, so `.claude/skills/` holds two-line files whose entire body is *"read the
+read that path, so `.claude/skills/` holds pointer files whose entire body is *"read the
 `.agents` one and follow it."* That is the only concession to a specific tool, and it carries
 no behaviour.
 

@@ -19,3 +19,7 @@ Worth reading for one thing in particular: the wrap's decision 2 records a **dev
 the approved spec** — 429 backoff was changed during implementation, the spec's acceptance
 criterion is now wrong, and the wrap says so instead of quietly reconciling the two. That
 sentence is the reason both documents exist.
+
+These examples predate human-reviewed TDD and the additional wrap sections. They remain
+unchanged as historical examples; use the current templates for new work. In the current
+workflow, changing an approved test expectation requires human review before proceeding.

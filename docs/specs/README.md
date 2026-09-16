@@ -92,8 +92,28 @@ superseded_by: null      # docs/specs/<slug>.md when status is superseded
   stay valid.
 - **superseded** — replaced by another spec. Keep the file; set `superseded_by`.
 
+An explicit request to implement a specific spec counts as agreement to that spec; update
+its status accordingly. This does not approve test expectations that have not been reviewed.
+
 Whoever moves a spec to `approved` is asserting they read it. That is the entire point of
 the status field, and the entire point of the command stopping.
+
+### Ticket traceability and implementation workflow
+
+Keep `tickets:` as a list of issue keys for compatibility. Put clickable ticket URLs and
+relevant source references in `## Problem`. Read the ticket before interviewing when access
+is available; surface contradictions instead of silently resolving them. The ticket owns
+priority, assignment, and team status; this document owns the agreed technical approach.
+
+Use stable acceptance IDs (AC-1, AC-2, …), preserve them across revisions, and do not reuse
+removed IDs. Link criteria to ticket requirements and verification scenarios. In `## Approach`,
+explain current and proposed behavior with a concrete example and the main components.
+
+Every new spec's `## How to verify` must direct the implementing session to
+`.agents/skills/tdd/SKILL.md`: write and run tests, show scenarios and observed failures,
+wait for human approval of expectations, then implement and refactor. Changed expectations
+return for review. Record explicit exceptions or waivers. Starting work does not itself
+waive the checkpoint. The fresh-session handoff repeats this instruction so it is easy to use.
 
 ### Body sections
 
@@ -181,10 +201,10 @@ who did not write the spec could check each item. Prefer observable behaviour ov
 implementation:
 
 ```markdown
-- A capture that receives a 503 is retried up to 5 times and then fails the payment once.
-- A capture that receives a 422 is never retried.
-- Total time in the retry chain never exceeds 15s.
-- Every attempt appears in `payment_retry_audit`, including attempts that failed.
+- **AC-1** — A capture that receives a 503 is retried up to 5 times and then fails the payment once.
+- **AC-2** — A capture that receives a 422 is never retried.
+- **AC-3** — Total time in the retry chain never exceeds 15s.
+- **AC-4** — Every attempt appears in `payment_retry_audit`, including attempts that failed.
 ```
 
 These become the `## Verification` section of the wrap that implements this spec. Write them
@@ -193,8 +213,8 @@ as things you could hand to a test.
 #### `## How to verify`
 
 Acceptance criteria say *what* must be true. This section says **how an agent checks that for
-itself, while it works**, without asking anyone. It is the difference between a target and a
-feedback loop.
+itself while it works**. The human reviews the expectations before implementation; the
+agent executes the checks and reports the evidence.
 
 An agent cannot meaningfully audit its own judgement — ask one whether it implemented
 something correctly and it will say yes. Self-checking only means something when the check is
