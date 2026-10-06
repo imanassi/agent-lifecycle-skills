@@ -1,50 +1,57 @@
 # agent-lifecycle-skills
 
-**Ticket-linked specs, human-reviewed TDD, and session debriefs for AI coding agents.**
+**Build a better idea, understand the implementation, and leave a useful handover.**
 
-Bookend your agent sessions. `/spec` interviews you *before* the work and writes a task
-contract. `/wrap` debriefs the session *after* and records what was decided, changed, and
-verified. Between them, `/tdd` writes tests, waits for human review, and implements. All three
-workflows use the same instructions in Claude Code, Codex CLI, Cursor, and agents that read
-`AGENTS.md`.
+Three skills help at different points in an AI coding session:
+
+| Skill | Purpose | When to use it |
+| --- | --- | --- |
+| `/spec` | **Build a better idea.** Explore the problem, agree on the outcome, and write a spec so implementation can start in a clean session. | When the idea needs shaping or there are important choices to make. |
+| `/tdd` | **Build your understanding.** Review concrete test scenarios and expected behavior before the agent implements, then trace the result through the code. | Optional for direct tasks; generated specs request it by default. |
+| `/wrap` | **Capture intent and hand over.** Record why changes were made, what was verified, and what the next person or agent needs to know. | At the end of any session worth preserving, with or without a spec. |
+
+**A bug fix or minor change can start directly in the implementation session.** You do not
+need to write a spec first. Use the skills that fit the work; all three use the same
+instructions in Claude Code, Codex CLI, Cursor, and agents that read `AGENTS.md`.
 
 ```mermaid
-flowchart TD
-    subgraph S1["<b>SESSION 1</b> · decide"]
-        A["<b>You</b><br/>a rough, half-formed idea"]
-        B["<b>/spec</b><br/>tidies your brief<br/>reads the code<br/>interviews you"]
-        C["<b>docs/specs/&lt;feature&gt;.md</b><br/>what to build<br/>and how to check it"]
-        A --> B --> C
+---
+config:
+  flowchart:
+    curve: basis
+    nodeSpacing: 30
+    rankSpacing: 40
+---
+flowchart LR
+    START((Start))
+
+    subgraph S1["SESSION 1 · shape"]
+        SPEC("/spec · intent")
     end
 
-    STOP{{"<b>HARD STOP</b><br/>you read the spec<br/>no code written yet"}}
-
-    subgraph S2["<b>SESSION 2</b> · build, on a clean context"]
-        D["<b>/tdd</b><br/>from the spec<br/>writes and runs tests<br/>waits for human test approval<br/>implements and refactors"]
-        E["<b>/wrap</b><br/>reads the session<br/>and the diff"]
-        F["<b>docs/sessions/&lt;date&gt;.md</b><br/>what happened<br/>what was decided, and why"]
-        D --> E --> F
+    subgraph S2["SESSION 2 · implement"]
+        TDD("/tdd · understand")
+        WRAP("/wrap · hand over")
     end
 
-    C --> STOP --> D
-    F -.->|"linked by <b>spec:</b>"| C
+    START --> SPEC --> TDD --> WRAP
+    SPEC --> WRAP
+    START --> WRAP
 
-    classDef doc  fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
-    classDef cmd  fill:#d1fae5,stroke:#047857,stroke-width:2px,color:#022c22
-    classDef stop fill:#fef3c7,stroke:#b45309,stroke-width:3px,color:#451a03
-    classDef you  fill:#ffffff,stroke:#64748b,stroke-width:2px,color:#0f172a
-    class C,F doc
-    class B,E cmd
-    class STOP stop
-    class A,D you
+    style START fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#0f172a
+    style SPEC fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    style TDD fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style WRAP fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
     style S1 fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#475569
     style S2 fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#475569
-    linkStyle default stroke:#64748b,stroke-width:1.5px
+    linkStyle default stroke:#64748b,stroke-width:2px
 ```
 
-<sub>Two sessions, on purpose. `/spec` decides what to build and then stops; a **fresh**
-session builds it, reading the finished spec and none of the discarded drafts that produced
-it. `/wrap` closes the loop and links its record back to the spec.</sub>
+When you use `/spec`, the two sessions have different jobs: shape the idea, then build from
+the finished spec in a **fresh context**, without the discarded interview drafts. For a
+clear bug fix or minor change, skip session 1. `/tdd` can work from either a spec or the task
+itself; it is optional unless the spec or project requires it. `/wrap` preserves the intent
+and handover in either path, linking to a spec when one exists.
 
 ## Why
 
@@ -53,15 +60,17 @@ lost context at the end — you explain the constraint once, the agent drifts, a
 sessions later nobody remembers why the retry policy looks like that. The diff records what
 changed and nothing records why.
 
-These are three lightweight, repository-native commands that close both ends:
+There is also a gap in the middle: code can pass its tests while you still do not understand
+what it does or why. As Andrej Karpathy puts it, quoting a line he keeps returning to:
 
-- **`/spec`** draws out what you actually want — edge cases, constraints, acceptance criteria,
-  and the runnable checks that prove them — into a task contract the implementing session can
-  work against on its own.
-- **`/tdd`** writes and runs acceptance tests, waits for human approval of their expectations,
-  then implements and refactors while keeping those tests passing.
-- **`/wrap`** reads the session and the diff and writes down the decisions, the rejected
-  alternatives, what was verified, and what the next agent needs to know.
+> You can outsource your thinking, but you can't outsource your understanding.
+
+— [Andrej Karpathy, Sequoia Ascent 2026](https://karpathy.bearblog.dev/sequoia-ascent-2026/)
+
+`/tdd` gives you a concrete way to stay involved: examine scenarios, question the expected
+outcomes, and follow the resulting code. Passing tests provides evidence of behavior;
+reviewing and explaining that behavior builds understanding. `/spec` helps you decide what
+is worth building, and `/wrap` preserves the intent behind what you built for the next handover.
 
 Everything is plain Markdown committed to your repo. No service, no database, no lock-in.
 
@@ -118,6 +127,10 @@ rather than silent in-place changes. That happens once; afterwards it tracks pro
 
 ## What `/spec` does
 
+Use it to turn a rough idea into a clear starting point for a fresh implementation session.
+If the task is already clear, such as a small bug fix or minor change, start implementing
+directly. A spec is useful when there is something to work out, not a prerequisite for every edit.
+
 1. **Asks what you are trying to achieve**, before proposing anything. The brief is expected
    to be half-formed; the agent helps draw it out — what triggered this, what you already
    tried, what "fixed" looks like. What it will not do is hand you a solution first.
@@ -169,9 +182,13 @@ reading paragraph with the new **How to use specs and session history** block fr
 
 ## What `/tdd` does
 
-The fresh-session prompt from `/spec` directs the implementing agent to the TDD skill.
-The spec's **How to verify** section carries the same requirement, so simply asking to
-implement the spec also discovers the workflow.
+Use `/tdd` when you want tests and human review to help you understand the intended behavior
+before implementation. It works from a spec **or an agreed task**; no new spec is needed.
+For direct tasks, this workflow is optional unless your project requires it.
+
+Generated specs request TDD by default: the fresh-session prompt and the spec's **How to
+verify** section direct the implementing agent to this skill. Follow that requirement when
+implementing such a spec, unless you explicitly change it.
 
 1. Write behavior tests mapped to acceptance IDs and run them to establish meaningful failures.
 2. Present a small set of scenarios, expected outcomes, test references, and observed failures.
@@ -184,6 +201,10 @@ not itself waive it. Manual-only behavior needs an agreed scenario, reviewer, an
 Approval concerns the intended behavior; the agent remains responsible for test execution.
 
 ## What `/wrap` does
+
+Capture the intent behind the changes and leave a useful handover for the next person or
+agent. It works after any implementation session, including bug fixes and minor changes
+that used neither `/spec` nor `/tdd`.
 
 Reconstructs the session from the conversation and the diff, then writes: intent, decisions
 with their rejected alternatives, changes (calling out migrations, config keys, new
@@ -204,7 +225,8 @@ docs/specs/<slug>.md          ← specs. Named by feature. Mutable.
 docs/sessions/README.md       ← wrap format. Single source of truth. Edit this.
 docs/sessions/_TEMPLATE.md
 docs/sessions/YYYY-MM-DD-HHMM-<slug>.md   ← wraps. Append-only.
-                                 date+time orders them; the slug ties them to a spec.
+                                 date+time orders them; the slug describes the work
+                                 and starts with the spec's slug when there is one.
 
 .agents/skills/spec/SKILL.md  ← the procedure, agent-independent
 .agents/skills/wrap/SKILL.md
@@ -257,7 +279,9 @@ honest record of a moment. A spec is a living document: you approve it, build, l
 decision was wrong, revise it. Share a folder between them and you get either stale immutable
 specs or edited wraps that stop being trustworthy.
 
-The link between them is the `spec:` field in a wrap's frontmatter:
+When a session implements a spec, the `spec:` field in the wrap's frontmatter links them.
+For work without a spec, use `spec: null`; the wrap still records intent, decisions, and the
+handover. To find sessions linked to a spec:
 
 ```bash
 grep -rl "docs/specs/payment-retry" docs/sessions/   # every session on one spec
