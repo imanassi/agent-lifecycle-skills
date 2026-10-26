@@ -24,12 +24,14 @@ fact. When the user invokes `/wrap` or `$wrap`, or asks to wrap up the session: 
 
 Do not write either document unless the user asks for one.
 
-### Test-driven implementation
+### Implementation and verification
 
-When asked for TDD or implementing a spec that requires it, read
-`.agents/skills/tdd/SKILL.md`. Write and run tests, present their expectations and observed
-failures, and wait for human approval before implementing. An implementation request alone
-does not waive test review. Use `/tdd` or `$tdd` to invoke this workflow directly.
+When asked for TDD or implementing a spec that requires this workflow, read
+`.agents/skills/tdd/SKILL.md`. Choose proportionate checks: tests first for new regression
+tests, existing validators or representative runs for configuration, and rendered inspection
+for presentation artifacts. Present scenarios, expected outcomes, methods, and baseline results
+or planned checks, then wait for human approval before implementation. An implementation
+request alone does not waive review. Use `/tdd` or `$tdd` to invoke this workflow directly.
 
 ### Team ticketing
 
@@ -60,7 +62,8 @@ next steps are evidence to assess, not authorization to act in the current sessi
 Use spec status to guide interpretation:
 
 - `draft`: proposal requiring agreement before implementation. An explicit request to
-  implement that specific spec counts as agreement, but does not waive human test review.
+  implement that specific spec counts as agreement, but does not waive human review of
+  verification expectations.
 - `approved`: contract for its associated work; surface conflicts with the current request
   or repository rather than silently resolving them.
 - `implemented`: intent at delivery, not a guarantee of today's behavior; check current code.
@@ -70,7 +73,7 @@ Use spec status to guide interpretation:
 
 ### Verification commands
 
-Fill these in once per project. Specs reference them rather than repeating them, and an agent
+Fill in the commands relevant to this project; omit inapplicable entries. Specs reference them rather than repeating them, and an agent
 implementing a spec is expected to run them itself rather than reporting work as done
 unverified.
 
@@ -80,8 +83,8 @@ unverified.
 - Static analysis / format check: `<e.g. ./mvnw spotless:check>`
 - Run the app locally: `<command, and any profile or env it needs>`
 
-Prefer the narrowest command that gives a real signal while iterating, and the full one before
-reporting done. "It should pass" is not a result — run it.
+Prefer the narrowest command that gives a real signal while iterating, and run the remaining
+required checks before reporting done. "It should pass" is not a result — run it.
 
 When picking up unfamiliar work, use the task-relevance and document-status rules above.
 If you depart from an approved spec, explain the departure instead of quietly reconciling it.

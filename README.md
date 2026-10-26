@@ -7,7 +7,7 @@ Three skills help at different points in an AI coding session:
 | Skill | Purpose | When to use it |
 | --- | --- | --- |
 | `/spec` | **Build a better idea.** Explore the problem, agree on the outcome, and write a spec so implementation can start in a clean session. | When the idea needs shaping or there are important choices to make. |
-| `/tdd` | **Build your understanding.** Review concrete test scenarios and expected behavior before the agent implements, then trace the result through the code. | Optional for direct tasks; generated specs request it by default. |
+| `/tdd` | **Build your understanding.** Review scenarios, proportionate checks, and expected behavior before implementation, then trace the result. | Optional for direct tasks; generated specs request it by default. |
 | `/wrap` | **Capture intent and hand over.** Record why changes were made, what was verified, and what the next person or agent needs to know. | At the end of any session worth preserving, with or without a spec. |
 
 **A bug fix or minor change can start directly in the implementation session.** You do not
@@ -159,8 +159,8 @@ wraps record history. Stable acceptance IDs connect requirements to tests and re
 
 `/wrap` includes a short code-reading route and a ticket-ready update with available links.
 Posting requires explicit authorization. Tests passing does not automatically close tickets.
-Existing installations preserve project-owned `AGENTS.md`; copy the new TDD and Team ticketing
-blocks from the snippet when updating. Historical specs and wraps remain valid as written.
+Existing installations preserve project-owned `AGENTS.md`; copy the **Implementation and
+verification** and **Team ticketing** blocks from the snippet when updating. Historical specs and wraps remain valid as written.
 
 ## Reading specs and history without importing stale instructions
 
@@ -182,23 +182,34 @@ reading paragraph with the new **How to use specs and session history** block fr
 
 ## What `/tdd` does
 
-Use `/tdd` when you want tests and human review to help you understand the intended behavior
-before implementation. It works from a spec **or an agreed task**; no new spec is needed.
-For direct tasks, this workflow is optional unless your project requires it.
+Use `/tdd` to review intended behavior and how it will be verified before implementation.
+It works from a spec **or an agreed task**; no new spec is needed. For direct tasks, the
+workflow is optional unless your project requires it. Generated specs request this workflow
+by default, with proportionate verification rather than mandatory automated tests for every
+artifact. The command name stays `/tdd`; tests first applies to new regression tests.
 
-Generated specs request TDD by default: the fresh-session prompt and the spec's **How to
-verify** section direct the implementing agent to this skill. Follow that requirement when
-implementing such a spec, unless you explicitly change it.
+1. Choose the smallest credible checks, reusing existing verification where possible.
+2. For new regression tests, write and run them to establish meaningful failures. For
+   validators, representative runs, and inspection, prepare concrete steps and expected results.
+3. Present scenarios, expected outcomes, methods, and baseline results or planned checks.
+   Wait for explicit human approval before implementation.
+4. Implement and verify. Changed expectations return for review.
+5. Report actual evidence, gaps, and a reading route through the code or artifacts.
 
-1. Write behavior tests mapped to acceptance IDs and run them to establish meaningful failures.
-2. Present a small set of scenarios, expected outcomes, test references, and observed failures.
-3. Wait for explicit human approval of expectations before writing implementation code.
-4. Implement, then refactor with approved tests passing. Changed expectations return for review.
-5. Report results and a reading route through the code. An interactive walkthrough is optional.
+Use focused regression tests for executable logic, validators and representative runs for
+pipeline configuration, and rendered inspection for static HTML and documents. Test important
+interactive behavior separately from layout. Manual or visual checks are normal choices when
+appropriate, even if automation is possible. One check may cover several acceptance criteria.
+Do not introduce test infrastructure solely for the workflow. Persistent tests need a future
+execution path; delivery-only checks can remain evidence without becoming permanent test code.
 
-The checkpoint is required by default and can be explicitly waived. Asking to start work does
-not itself waive it. Manual-only behavior needs an agreed scenario, reviewer, and timing.
-Approval concerns the intended behavior; the agent remains responsible for test execution.
+The human checkpoint remains required by default and can be explicitly waived. Asking to
+start work does not itself waive it. Approval concerns scenarios and verification approach;
+the agent remains responsible for execution and honest reporting.
+
+Existing installations preserve project-owned `AGENTS.md`. Update its implementation guidance
+from `AGENTS.md.snippet` to adopt this policy. Existing specs retain their explicit requirements
+until revised; historical wraps remain unchanged.
 
 ## What `/wrap` does
 

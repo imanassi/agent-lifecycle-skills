@@ -175,9 +175,10 @@ break other people.
 
 #### `## Verification`
 
-How we know it works. Exact commands and outcomes. Map stable acceptance IDs to test
-scenarios and results. Record which expectations the human approved, any explicit waiver,
-and any later changes reviewed. If review cannot be established, say so; do not infer it
+How we know it works. Exact commands or inspection procedures and observed outcomes. Map
+stable acceptance IDs to verification scenarios and results. Distinguish persistent regression
+tests from delivery-only checks; record concrete evidence for inspections. Record which
+expectations the human approved, any explicit waiver, and any later changes reviewed. If review cannot be established, say so; do not infer it
 from passing tests. Older sessions without this workflow remain valid historical records.
 
 ```markdown
@@ -187,13 +188,13 @@ from passing tests. Older sessions without this workflow remain valid historical
 ```
 
 Report only what actually ran and what you actually saw. "The tests should pass" is not a
-verification result; neither is "the implementation looks correct." If a command did not run
-in this session, it did not run — `build: not-run` and one sentence on why.
+verification result; neither is "the implementation looks correct." If no build or test command ran
+in this session, use `build: not-run` and explain why; report other verification separately.
 
 Where this session implemented a spec, work through that spec's `## Acceptance criteria` and
 `## How to verify` and state each criterion as **met**, **not met**, or **not checked**, with
-the command that decided it. A criterion silently omitted reads as met, which is how an
-unverified change ships.
+the command or inspection evidence that decided it. A criterion silently omitted reads as
+met, which is how an unverified change ships.
 
 If nothing was run and the spec has a verification loop, say so and offer to run it before
 writing the wrap. Recording an unverified session honestly is fine; recording it as though it
@@ -206,7 +207,7 @@ Unresolved things, in priority order. Each names what would resolve it.
 #### `## How to read this change`
 
 Give a short reading route for a human: entry point, execution path, key invariant, and the
-test that demonstrates the behavior. Use actual paths and symbol names; prefer commit links
+check that demonstrates the behavior. Use actual paths and symbol names; prefer commit links
 when available for durable references. Explain one concrete example rather than restating
 the file list. For sessions without code changes, say not applicable.
 

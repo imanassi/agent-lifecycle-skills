@@ -1,6 +1,6 @@
 ---
 name: tdd
-description: Implement with tests first and human review of expectations before implementation.
+description: Implement with proportionate verification and human review of expectations before implementation.
 argument-hint: "[spec path or task]"
 ---
 

@@ -166,17 +166,20 @@ to agree with the conclusion.
 Explain current and proposed behavior through one concrete example in `## Approach`, naming
 its main components. Give acceptance criteria stable IDs (AC-1, AC-2, …); preserve IDs on
 revision and never reuse removed IDs. Map them to ticket requirements where available.
-In `## How to verify`, require `.agents/skills/tdd/SKILL.md`: tests first, observed failures,
-human approval of expectations before implementation, then green and refactor. Record any
-explicitly agreed exception. A request to continue now does not waive test review by itself.
+In `## How to verify`, use `.agents/skills/tdd/SKILL.md` to choose proportionate verification:
+regression tests for durable executable behavior, existing validators or representative runs
+for configuration, and rendered inspection for presentation artifacts. Keep human approval of
+scenarios and verification approach before implementation. Record explicit waivers; a request
+to continue does not waive review by itself. Avoid new test infrastructure solely for the workflow.
 
 Write acceptance criteria as things someone else could check, not as implementation notes.
 They become the `## Verification` section of the wrap that implements this spec.
 
-`## How to verify` must contain **executable** checks — commands that pass or fail on their
-own. An agent cannot audit its own judgement, so "review the code and confirm it looks right"
-is worthless there. If a criterion has no runnable check, name the human who checks it by
-hand and when; if it has neither, it does not belong in the acceptance list.
+`## How to verify` must contain concrete checks with observable expected outcomes. Use
+commands where useful; for inspection, name the artifact, scenario, expected result, reviewer
+(agent or human), and timing. "Looks correct" is not evidence. One check may cover several
+criteria. State where persistent tests will run; delivery-only checks need no permanent test
+code. A criterion with no credible verification belongs in Open questions or Out of scope.
 
 Finish the spec with `## Jira summary`, following the format definition. Derive it from the
 finished spec, not just the original brief. It must be ready to paste into a Jira description
@@ -203,10 +206,11 @@ Open questions left unresolved: <count, or none>
 
 To implement, open a fresh session and say:
   Read docs/specs/<slug>.md and implement it using .agents/skills/tdd/SKILL.md.
-  First write and run tests for its acceptance criteria. Present the scenarios,
-  expected outcomes, and observed failures for human review. Wait for explicit
-  approval before writing implementation code. Then implement and refactor with
-  approved tests passing. Return changed expectations for review. Run the checks
+  Choose proportionate checks for its acceptance criteria. Use tests first for new
+  regression tests; use validators, representative runs, or inspection where appropriate.
+  Present scenarios, expected outcomes, methods, and baseline results or planned checks
+  for human review. Wait for explicit approval before implementation. Then implement
+  and verify. Return changed expectations for review. Run the checks
   in "How to verify" and report gaps honestly. Ask before deviating from the spec.
 
 Jira summary — ready to paste:

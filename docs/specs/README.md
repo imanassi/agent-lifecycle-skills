@@ -115,7 +115,8 @@ next steps are evidence to assess, not authorization to act in the current sessi
 Use spec status to guide interpretation:
 
 - `draft`: proposal requiring agreement before implementation. An explicit request to
-  implement that specific spec counts as agreement, but does not waive human test review.
+  implement that specific spec counts as agreement, but does not waive human review of
+  verification expectations.
 - `approved`: contract for its associated work; surface conflicts with the current request
   or repository rather than silently resolving them.
 - `implemented`: intent at delivery, not a guarantee of today's behavior; check current code.
@@ -135,9 +136,11 @@ removed IDs. Link criteria to ticket requirements and verification scenarios. In
 explain current and proposed behavior with a concrete example and the main components.
 
 Every new spec's `## How to verify` must direct the implementing session to
-`.agents/skills/tdd/SKILL.md`: write and run tests, show scenarios and observed failures,
-wait for human approval of expectations, then implement and refactor. Changed expectations
-return for review. Record explicit exceptions or waivers. Starting work does not itself
+`.agents/skills/tdd/SKILL.md`: choose proportionate checks, show scenarios, expected outcomes,
+methods, and baseline results or planned checks, then wait for human approval before
+implementation. Use tests first for new regression tests; validators, representative runs,
+and inspection are normal alternatives where appropriate. Changed expectations return for
+review. Record explicit waivers. Starting work does not itself
 waive the checkpoint. The fresh-session handoff repeats this instruction so it is easy to use.
 
 ### Body sections
@@ -233,7 +236,7 @@ implementation:
 ```
 
 These become the `## Verification` section of the wrap that implements this spec. Write them
-as things you could hand to a test.
+as observable outcomes with concrete verification scenarios.
 
 #### `## How to verify`
 
@@ -241,16 +244,20 @@ Acceptance criteria say *what* must be true. This section says **how an agent ch
 itself while it works**. The human reviews the expectations before implementation; the
 agent executes the checks and reports the evidence.
 
-An agent cannot meaningfully audit its own judgement — ask one whether it implemented
-something correctly and it will say yes. Self-checking only means something when the check is
-**external to that judgement**: a command that exits non-zero, a test that fails, a query that
-returns the wrong row. So write executable things. *"Review the code and confirm it looks
-right"* is not verification and does not belong here.
+Choose the smallest check that provides credible evidence, following the selection guidance
+in `.agents/skills/tdd/SKILL.md`. Reuse existing checks; do not add test infrastructure solely
+for this workflow. One check can cover several criteria. Persistent tests need a future
+execution path; delivery-only verification need not become permanent test code.
+
+Use observable evidence: a command result, returned data, or an inspected rendering compared
+with explicit expectations. *"Review the code and confirm it looks right"* is not verification.
+Visual or manual checks are valid even when automation is possible; identify their reviewer
+(agent or human) and use a human for criteria requiring human judgment.
 
 Cover three things.
 
-**The loop** — the exact commands to run after each change, narrowest first, so the agent
-gets a fast signal rather than a ten-minute one:
+**The loop** — the commands or inspection steps relevant to the change, narrowest first.
+For automated behavior checks, for example:
 
 ```markdown
 - `./mvnw -pl payments test -Dtest=CaptureClientRetryTest` — tight loop, ~15s.
@@ -269,14 +276,14 @@ and the spec is where you get to notice it in advance:
 - Adyen 429s cannot be produced from the sandbox. Needs a WireMock stub; none exists yet.
 ```
 
-**What cannot be checked automatically, and who checks it.** Be specific:
+**Inspection and manual checks** — scenario, expected result, reviewer, and timing. For example:
 
 ```markdown
-- Behaviour against a partitioned database — no fault-injectable environment. Manual, in
-  staging, before release. Owner: whoever runs the release.
+- Render the report at 375px and 1280px widths: all table columns remain readable and no
+  text overlaps. Agent inspects both renderings after generation; record actual findings.
 ```
 
-If an acceptance criterion has no entry here and no named manual owner, it is decoration.
+If an acceptance criterion has no concrete verification procedure here, it is decoration.
 Either give it a check or move it to `## Out of scope`.
 
 #### `## Out of scope`

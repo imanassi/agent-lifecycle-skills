@@ -41,13 +41,13 @@ changed public API or wire format, deploy-order constraints.>
 
 ## Verification
 
-- `<command>` — <outcome>.
+- <command or inspection procedure> — <observed outcome; evidence reference where available>.
 - Not covered: <gap>.
-- Human test review: <approved scenarios and references, explicit waiver, or not established>.
-- <AC-ID> → <reviewed scenario/test> → <actual result>.
+- Human verification review: <approved scenarios and references, explicit waiver, or not established>.
+- <AC-ID> → <reviewed scenario and verification method> → <actual result>.
 
 <Where this session implemented a spec, list each of its acceptance criteria as met /
-not met / not checked, with the command that decided it. Only what actually ran.>
+not met / not checked, with the command or inspection evidence that decided it. Only checks actually performed.>
 
 ## Open questions & risks
 
@@ -55,7 +55,7 @@ not met / not checked, with the command that decided it. Only what actually ran.
 
 ## How to read this change
 
-<Entry point → execution path → key invariant → demonstrating test, with actual paths and
+<Entry point → execution path → key invariant → demonstrating check, with actual paths and
 symbols. Use one concrete example. Not applicable if no code changed.>
 
 ## Ticket update

@@ -54,20 +54,22 @@ rollback. One sentence if there are no rollout concerns.>
 
 ## How to verify
 
-Use `.agents/skills/tdd/SKILL.md`: write and run acceptance tests first, present scenarios,
-expected outcomes, and observed failures, then wait for explicit human approval before
-implementation. Implement and refactor with approved tests passing. Changed expectations
-require renewed review. Record any explicit waiver; starting implementation is not a waiver.
+Use `.agents/skills/tdd/SKILL.md`: choose proportionate checks and present scenarios, expected
+outcomes, methods, and baseline results or planned checks for human approval before
+implementation. Use tests first for new regression tests; use existing validators,
+representative runs, or inspection where appropriate. Implement and verify the approved
+scenarios. Changed expectations require renewed review. Record explicit waivers.
 
-<For each acceptance ID, name its test scenario and check. "Looks correct" is not verification.>
+<Map acceptance IDs to scenarios and checks; one check may cover several IDs. State where
+persistent tests will run. Delivery-only checks need no permanent test code.>
 
 - `<narrowest command — the tight loop>` — <what it proves, how long it takes>.
-- `<full command — before declaring done>`.
+- `<remaining required checks — before declaring done>`.
 
 <Fixtures, stubs, or seed data the loop needs that do not exist yet.>
 
-<What cannot be checked automatically, who checks it, and when. A criterion with no entry
-here and no named owner is decoration — give it a check or move it out of scope.>
+<For inspection: artifact, scenario, expected result, reviewer (agent or human), and timing.
+Give each criterion a credible check or move it to Open questions or Out of scope.>
 
 ## Out of scope
 
